@@ -63,9 +63,17 @@ def cal_unit_file_size(_size, _unit, _part):
 
 def make_file(_size, filename):
     file_path = os.path.join(MAKE_FILE_PATH, filename)
+    paper = hashlib.sha256(filename.encode('utf-8')).hexdigest()
+    paper_len = len(paper)
     with open(file_path, 'w') as f:
-        for i in range(_size):
-            f.write(random.choice(string.ascii_letters))
+        # buf = ''
+        # # 사이즈만큼 문자열 만들기.
+        # # TODO : 해시로 변경예정
+        # for i in range(_size):
+        #     # buf += random.choice(string.ascii_letters)
+        #     buf += paper[(paper_len % (i + 1)) - 1]
+        buf = paper * math.ceil(_size / paper_len)
+        f.write(buf[:_size])
         f.close()
 
 
@@ -73,6 +81,7 @@ def make_files(unit_size, _part):
     for i in range(_part):
         filename = get_random_to_md5(i)
         make_file(unit_size, filename)
+        print('make %d' % i)
 
 
 if __name__ == '__main__':
