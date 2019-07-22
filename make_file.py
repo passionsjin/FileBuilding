@@ -1,8 +1,8 @@
 '''
-usage : python make_file.py --size --part
+usage : python make_file.py --size SIZE:float --unit UNIT:str --part PART:int
 
 size : 총 사이즈
-unit : 사이즈에 대한 단위
+unit : 사이즈에 대한 단위 (B, KB, MB, GB, TB)
 part : 파일갯수
 
 결과 : 지정한 파일갯수만큼 파일 생성. 만들어진 파일의 총 사이즈는 지정한 사이즈보다 같거나 큼.
@@ -16,7 +16,7 @@ import random
 import string
 from datetime import datetime
 
-make_file_path = os.path.join(os.path.dirname(__file__), "test_file")
+MAKE_FILE_PATH = os.path.join(os.path.dirname(__file__), "test_file")
 
 
 class UnitBytes(enum.Enum):
@@ -27,8 +27,8 @@ class UnitBytes(enum.Enum):
     TB = 4
 
 
-def convert_byte(_input: int, unit: UnitBytes):
-    return int(_input * (1024 ** unit.value))
+def convert_byte(_input: int, _unit: UnitBytes):
+    return int(_input * (1024 ** _unit.value))
 
 
 def get_random_to_md5(target: str):
@@ -61,7 +61,7 @@ def cal_unit_file_size(_size, _unit, _part):
 
 
 def make_file(_size, filename):
-    file_path = os.path.join(make_file_path, filename)
+    file_path = os.path.join(MAKE_FILE_PATH, filename)
     with open(file_path, 'w') as f:
         for i in range(_size):
             f.write(random.choice(string.ascii_letters))
