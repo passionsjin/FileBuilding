@@ -16,6 +16,7 @@ import random
 import string
 from datetime import datetime
 
+
 MAKE_FILE_PATH = os.path.join(os.path.dirname(__file__), "test_file")
 
 
@@ -66,8 +67,6 @@ def make_file(_size, filename):
         for i in range(_size):
             f.write(random.choice(string.ascii_letters))
         f.close()
-
-    print("size : %d -> %d" % (_size, os.path.getsize(file_path)))
 
 
 def make_files(unit_size, _part):
